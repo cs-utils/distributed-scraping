@@ -1,0 +1,8 @@
+[package]
+name = "key-manager"
+version = "0.1.0"
+authors = ["Evert Geldenhuys <evert.geldenhuys2@gmail.com>"]
+
+[dependencies]
+futures = "0.1.14"
+hyper = "0.11.2"
