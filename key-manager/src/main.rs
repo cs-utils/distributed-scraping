@@ -5,6 +5,7 @@ use futures::future::Future;
 
 use hyper::header::ContentLength;
 use hyper::server::{Http, Request, Response, Service};
+use hyper::{Method, StatusCode};
 
 struct HelloWorld;
 
@@ -19,15 +20,23 @@ impl Service for HelloWorld {
     // resolve to. This can change to whatever Future you need.
     type Future = Box<Future<Item=Self::Response, Error=Self::Error>>;
 
-    fn call(&self, _req: Request) -> Self::Future {
-        // We're currently ignoring the Request
-        // And returning an 'ok' Future, which means it's ready
-        // immediately, and build a Response with the 'PHRASE' body.
-        Box::new(futures::future::ok(
-            Response::new()
-                .with_header(ContentLength(PHRASE.len() as u64))
-                .with_body(PHRASE)
-        ))
+    fn call(&self, req: Request) -> Self::Future {
+        
+        let mut response = Response::new();
+
+         match (req.method(), req.path()) {
+            (&Method::Get, "/") => {
+                response.set_body("Try POSTing data to /echo");
+            },
+            (&Method::Post, "/echo") => {
+                // we'll be back
+            },
+            _ => {
+                response.set_status(StatusCode::NotFound);
+            },
+        };
+
+        Box::new(futures::future::ok(response))
     }
 }
 
