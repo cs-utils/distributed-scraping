@@ -1,10 +1,9 @@
 # Overview
 
-## Core Structures
-### Key Manager
+## Key Manager
 Responsible for managing keys and jobs
 
-#### Requirements
+### Requirements
 - Manage jobs with more than 100,000 unique keys
 - Manage jobs with a range of keys
 - Assign blocks of keys to clients
@@ -12,16 +11,16 @@ Responsible for managing keys and jobs
 - Invalidate keys (If a scraper misbehaved)
 - Ability to store and restore state
 
-### Data Storage
+## Data Storage
 We need some central place to store the collected and processed data
 
-#### Requirements
+### Requirements
 - A storage location that is accessible to the scraping pool
   - The client must upload the collected data to this location
   - The Key Master must be able to access the files in this location
   - Authorized users must be able to download these files
 
-#### Example Usage
+### Example Usage
 - Bob submits a job to the Key Master
 - Sally's Client downloads the job and the required Scraper
 - Sally's scraper fetches multiple blocks of data.
@@ -32,13 +31,13 @@ We need some central place to store the collected and processed data
 - Bob processes the data into a usable form and uploads it to the Data Server
 - Sarah downloads Bob's processed data to submit another scraping job
 
-#### Suggestions
+### Suggestions
 - Shared Google Drive folder with encryption
 
-### Client
+## Client
 Communication between the Key Master and the Scraper
 
-#### Requirements
+### Requirements
 - Get jobs from the Key Master
 - Request a block of keys related to a specific job
 - Submit a finished block of keys
@@ -50,15 +49,15 @@ Communication between the Key Master and the Scraper
 - Download a scraper from the Key Master to do the Job
 - Upload blocks of data to the Data Storage server
 
-### Scraper
+## Scraper
 A specific program containing the logic to scrape. Each job may have it's own scraper
 
-#### Requirements
+### Requirements
 - Given a block/range of keys it will download the data to Local Storage
 - Notify the Client of Successfull and Failed keys
 - TODO: Interaction between Client and Scraper
 
-### Data Provider
+## Data Provider
 An abstraction to provide an API for the Data Storage.
 This will allow us to change backends for the storage without having to modify
 other components.
